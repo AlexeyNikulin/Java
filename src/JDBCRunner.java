@@ -110,7 +110,7 @@ public class JDBCRunner {
     }
 
     public static void getEngine(Connection connection) throws SQLException {
-        System.out.println("Движки");
+        System.out.println("Все движки");
         // имена столбцов
         String columnName0 = "id",              // id
                 columnName1 = "horsepower",  // прочность
@@ -131,6 +131,7 @@ public class JDBCRunner {
     }
 
     public static void getMaxSpeedWithoutDuplicated(Connection connection) throws SQLException {
+        System.out.println("Получить все максимальные скорости которые есть у машин без дубликатов");
         String param = "";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT DISTINCT max_speed AS \"Все возможные скорости\" FROM cars_model;");
@@ -147,6 +148,7 @@ public class JDBCRunner {
     }
 
     public static void getAllModelAndHorsepowerOrderByHorsepowerDesc(Connection connection) throws SQLException {
+        System.out.println("Получить все модели и мощности машин и отсортировать по мощности в порядке убывая");
         String param = "";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT cars_model.model AS \"Модель\", engine.horsepower AS \"Мощность\"\n" +
@@ -167,6 +169,7 @@ public class JDBCRunner {
     }
 
     public static void getEnginesOrderByHorsepowerDesc(Connection connection) throws SQLException {
+        System.out.println("Получить все двигатели отсорт по мощности по убыванию");
         String param = "";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM engine ORDER BY engine_capacity DESC;");
@@ -185,6 +188,7 @@ public class JDBCRunner {
 
     public static void getCarsByEngineCapacity(Connection connection, double engineCapacity) throws SQLException {
         if (engineCapacity < 0 ) return;
+        System.out.printf("Получить все модели машин и их объем двигателя где их объем выше %f л%n", engineCapacity);
 
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT cars_model.model AS \"Модели машин\", engine.engine_capacity AS \"Объем двигателя\" " +
@@ -207,6 +211,7 @@ public class JDBCRunner {
 
     public static void getEnginesByEngineCapacity(Connection connection, double engineCapacity) throws SQLException {
         if (engineCapacity < 0 ) return;
+        System.out.printf("Получить двигатели с объемом двигателя ниже %f л%n", engineCapacity);
 
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT * FROM engine WHERE engine_capacity < ?;"
@@ -227,6 +232,7 @@ public class JDBCRunner {
 
     public static void getCarsBodiesByBodyStrength(Connection connection, int bodyStrength) throws SQLException {
         if (bodyStrength < 0 ) return;
+        System.out.printf("Получить кузовова где значение прочности больше %d%% %n", bodyStrength);
 
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT * FROM cars_bodies WHERE body_strength > ?;"
